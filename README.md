@@ -1,2 +1,1 @@
-# nextjs-blog
-A dummy blog site created by nextjs
+This is a starter template for [Learn Next.js](https://nextjs.org/learn).
