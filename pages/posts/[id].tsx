@@ -30,13 +30,19 @@ export default function Post({
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = getAllPostIds();
+export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
+  const paths = getAllPostIds(locales);
+  // const paths = [
+  // { params: { id: 'pre-rendering' }, locale: 'en' },
+  // { params: { id: 'ssg-ssr' }, locale: 'en' },
+  // { params: { id: 'pre-rendering' }, locale: 'de' },
+  // { params: { id: 'ssg-ssr' }, locale: 'de' }
+  // ];
   return {
     paths,
     fallback: false,
   };
-}
+};
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postData = await getPostData(params.id as string);
@@ -45,4 +51,4 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       postData,
     },
   };
-}
+};

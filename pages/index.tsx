@@ -55,10 +55,12 @@ export default function Home({
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ locale, locales }) {
   const allPostsData = getSortedPostsData();
   return {
     props: {
+      locale,
+      locales,
       allPostsData,
     },
   };
