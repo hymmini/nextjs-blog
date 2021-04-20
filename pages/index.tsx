@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Date from "../components/date";
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import { GetStaticProps } from "next";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Home({
   allPostsData,
@@ -15,26 +18,28 @@ export default function Home({
     id: string;
   }[];
 }) {
+  const router = useRouter();
+  const { t } = useTranslation("common");
+
   return (
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
+      <Link href="/" locale={router.locale === "en" ? "cn" : "en"}>
+        <button>{t("change-locale")}</button>
+      </Link>
       <section className={utilStyles.headingMd}>
         <p>
-          Hello, I am a cute cat, and my name is <b>Mini</b>.
+          {t("introduce")} <b>Mini</b>.
           <br />
-          Nice to meet you.
-        </p>
-        <p>
-          (This is a sample website - you’ll be building a site like this on{" "}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
+          {t("greeting")}
         </p>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>
           <Link href={`/blog`}>
-            <a>Blog</a>
+            <a>{t("blog")}</a>
           </Link>
         </h2>
         <ul className={utilStyles.list}>
@@ -45,7 +50,7 @@ export default function Home({
               </Link>
               <br />
               <small className={utilStyles.lightText}>
-                <Date dateString={date} />
+                <Date dateString={date} locale={router.locale}/>
               </small>
             </li>
           ))}
@@ -55,12 +60,11 @@ export default function Home({
   );
 }
 
-export async function getStaticProps({ locale, locales }) {
-  const allPostsData = getSortedPostsData();
+export async function getStaticProps({ locale }) {
+  const allPostsData = getSortedPostsData(locale);
   return {
     props: {
-      locale,
-      locales,
+      ...(await serverSideTranslations(locale, ["common"])),
       allPostsData,
     },
   };

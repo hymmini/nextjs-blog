@@ -4,10 +4,13 @@ import Head from "next/head";
 import Date from "../../components/date";
 import utilStyles from "../../styles/utils.module.css";
 import { GetStaticProps, GetStaticPaths } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Post({
+  locale,
   postData,
 }: {
+  locale:string,
   postData: {
     title: string;
     date: string;
@@ -22,7 +25,7 @@ export default function Post({
       <article>
         <h1 className={utilStyles.headingXl}>{postData.title}</h1>
         <div className={utilStyles.lightText}>
-          <Date dateString={postData.date} />
+          <Date dateString={postData.date} locale={locale}/>
         </div>
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
@@ -44,10 +47,12 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const postData = await getPostData(params.id as string);
+export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
+  const postData = await getPostData(params.id as string, locale as string);
   return {
     props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+      locale,
       postData,
     },
   };

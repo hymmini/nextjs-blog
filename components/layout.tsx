@@ -3,8 +3,8 @@ import Image from 'next/image'
 import styles from './layout.module.css'
 import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
+import { useTranslation } from "next-i18next";
 
-const name = 'Cat Mini'
 export const siteTitle = 'Cat Mini の Blog'
 
 export default function Layout({
@@ -14,6 +14,7 @@ export default function Layout({
   children: React.ReactNode
   home?: boolean
 }){
+  const { t } = useTranslation("common");
   return (
     <div className={styles.container}>
       <Head>
@@ -40,9 +41,9 @@ export default function Layout({
               className={utilStyles.borderCircle}
               height={144}
               width={144}
-              alt={name}
+              alt={t('name')}
             />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            <h1 className={utilStyles.heading2Xl}>{t('name')}</h1>
           </>
         ) : (
           <>
@@ -54,13 +55,13 @@ export default function Layout({
                   className={utilStyles.borderCircle}
                   height={108}
                   width={108}
-                  alt={name}
+                  alt={t('name')}
                 />
               </a>
             </Link>
             <h2 className={utilStyles.headingLg}>
               <Link href="/">
-                <a className={utilStyles.colorInherit}>{name}</a>
+                <a className={utilStyles.colorInherit}>{t('name')}</a>
               </Link>
             </h2>
           </>
@@ -70,7 +71,7 @@ export default function Layout({
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">
-            <a>← Back to home</a>
+            <a>← {t('back')}</a>
           </Link>
         </div>
       )}
