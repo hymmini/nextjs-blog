@@ -5,9 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
+    "cypress": "^7.4.0",
     "date-fns": "^2.20.2",
     "gray-matter": "^4.0.2",
     "next": "^10.0.0",
