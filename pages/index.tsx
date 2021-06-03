@@ -27,7 +27,7 @@ export default function Home({
         <title>{siteTitle}</title>
       </Head>
       <Link href="/" locale={router.locale === "en" ? "cn" : "en"}>
-        <button>{t("change-locale")}</button>
+        <button data-cy='change'>{t("change-locale")}</button>
       </Link>
       <section className={utilStyles.headingMd}>
         <p>
