@@ -18,7 +18,3 @@ export const Secondary = Template.bind({});
 Secondary.args = {
   locale: "cn",
 };
-
-export const Text: Story = () => (
-  <time dateTime="2020-1-2">January 1, 2020</time>
-);

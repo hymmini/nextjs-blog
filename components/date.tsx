@@ -1,12 +1,14 @@
 import { parseISO, format } from "date-fns";
 
+export interface DateProps {
+  dateString: string;
+  locale: string;
+}
+
 export default function Date({
   dateString,
   locale,
-}: {
-  dateString: string;
-  locale: string;
-}) {
+}:DateProps) {
   let formatString = "LLLL d, yyyy";
   switch (locale) {
     case "cn":
