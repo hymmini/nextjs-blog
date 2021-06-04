@@ -8,5 +8,12 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials"
-  ]
+  ],
+  webpackFinal: (config) => {
+    config.resolve.alias = {
+      '@cs': path.join(process.cwd(), 'components'),
+      '@sb': path.join(process.cwd(), 'stories'),
+    };
+    return config;
+  },
 }
